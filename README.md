@@ -12,8 +12,17 @@ Uses [extract-timestamp](https://github.com/bevry/extract-timestamp/) for the he
 
 ## Requirements
 
+Formatting requirements:
+
 -   Converted timestamps must be in a post that contains `my notes`
 -   Converted timestamps must be in the format of `timestamp -` or `timestamp —`
+
+> If anyone can comment or pull request on how to make these requirements customisable, [let me know](https://github.com/bevry/discourse-component-youtubetimestamps/issues/1).
+
+Browser requirements:
+
+-   Tested and supported in Safari and Google Chrome
+-   Firefox is not supported, as it [lacks support](https://bugzilla.mozilla.org/show_bug.cgi?id=1362154) for [named capture groups](https://github.com/tc39/proposal-regexp-named-groups) for regular expressions, which is what the underlying [extract-timestamp](https://github.com/bevry/extract-timestamp) library depends upon.
 
 ## Installation
 
