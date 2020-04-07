@@ -1,0 +1,24 @@
+{
+  "name": "discourse-component-youtubetimestamps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "source/index.js",
+  "scripts": {
+    "build": "bash ./build.bash",
+    "postinstall": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bevry/discourse-component-youtubetimestamps.git"
+  },
+  "author": "Benjamin Lupton <b@lupton.cc> (https://balupton.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bevry/discourse-component-youtubetimestamps/issues"
+  },
+  "homepage": "https://github.com/bevry/discourse-component-youtubetimestamps#readme",
+  "dependencies": {
+    "extract-timestamp": "^1.1.0"
+  }
+}

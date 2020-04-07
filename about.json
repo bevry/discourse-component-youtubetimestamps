@@ -1,0 +1,14 @@
+{
+  "name": "Youtube Timestamps",
+  "component": true,
+  "license_url": "https://github.com/bevry/discourse-component-youtubetimestamps/blob/master/LICENSE.md",
+  "about_url": "https://github.com/bevry/discourse-component-youtubetimestamps",
+  "authors": "Benjamin Arthur Lupton <b@lupton.cc> (https://balupton.com)",
+  "theme_version": "1.0.0",
+  "minimum_discourse_version": null,
+  "maximum_discourse_version": null,
+  "assets": {},
+  "color_schemes": {},
+  "modifiers": {},
+  "learn_more": "https://meta.discourse.org/t/beginners-guide-to-using-discourse-themes/91966"
+}
