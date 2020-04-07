@@ -12,7 +12,7 @@ Uses [extract-timestamp](https://github.com/bevry/extract-timestamp/) for the he
 
 ## Requirements
 
-Formatting requirements:
+To prevent false positives (when the format of a timestamp is used for something that isn't timestamped related), the following format requirements apply:
 
 -   Converted timestamps must be in a post that contains `my notes`
 -   Converted timestamps must be in the format of `timestamp -` or `timestamp —`
