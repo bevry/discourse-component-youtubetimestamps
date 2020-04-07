@@ -1,7 +1,7 @@
 {
   "name": "discourse-component-youtubetimestamps",
   "version": "1.0.0",
-  "description": "",
+  "description": "Convert timetamps in your post (requires post to contain `# my notes`), to a timestamped link to the post's (otherwise topic's) referenced youtube video",
   "main": "source/index.js",
   "scripts": {
     "build": "bash ./build.bash",
