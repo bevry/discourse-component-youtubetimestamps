@@ -14,8 +14,8 @@ Uses [extract-timestamp](https://github.com/bevry/extract-timestamp/) for the he
 
 To prevent false positives (when the format of a timestamp is used for something that isn't timestamp related), the following format requirements apply:
 
--   Converted timestamps must be in a post that contains `my notes`
--   Converted timestamps must be in the format of `timestamp -` or `timestamp —`
+-   Timestamps must be in a post that contains `my notes`
+-   Timestamps must be in the format of `timestamp -` or `timestamp —`
 
 > If anyone can comment or pull request on how to make these requirements customisable, [let me know](https://github.com/bevry/discourse-component-youtubetimestamps/issues/1).
 
