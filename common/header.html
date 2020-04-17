@@ -158,31 +158,69 @@
 		}
 		return text
 	}
-	/** Extract the first youtube video identifier that is found within an element */
-	function extractYoutubeID(el) {
-		// prepare
-		let youtubeID, child;
+	/** The selectors we use to identify a YouTube video. */
+	const selectors = {
 		// href is first
 		// as https://discuss.bevry.me/t/maps-of-meaning-9/31 links to the topic video
 		// but embeds the discussion video
-		child = el.querySelector('[href^="https://www.youtube.com/watch?v="]');
-		const href = child && child.getAttribute('href');
-		if (href) {
-			const url = new URL(href);
-			youtubeID = url.searchParams.get('v');
-			if (youtubeID) return youtubeID
-		}
-		// player
-		child = el.querySelector('[data-youtube-id]');
-		youtubeID = child && child.getAttribute('data-youtube-id');
-		if (youtubeID) return youtubeID
-		// embed
-		child = el.querySelector('[src^="https://www.youtube.com/embed/"]');
-		const src = child && child.getAttribute('src');
-		if (src) {
-			const url = new URL(src);
-			youtubeID = url.pathname.substring(7);
-			if (youtubeID) return youtubeID
+		href: '[href^="https://www.youtube.com/watch?v="]:not(.youtube-timetamp)',
+		embedHref: '[href^="https://www.youtube.com/embed/"]',
+		player: '[data-youtube-id]',
+		embed: '[src^="https://www.youtube.com/embed/"]',
+	};
+	/** The regular expression used to fetch the YouTube Video ID from a YouTube Embed Link */
+	const embedHrefRegex = /^.+?\/embed\/([^/]+?)([/?]+.*)?/;
+	/** The selector that aggregates all the earlier selectors */
+	const selectorAll = Array.from(Object.values(selectors)).join(', ');
+	/**
+	 * Check if the element is a selector.
+	 * http://youmightnotneedjquery.com/#matches_selector
+	 */
+	function matches(el, selector) {
+		return (
+			el.matches ||
+			el.matchesSelector ||
+			el.msMatchesSelector ||
+			el.mozMatchesSelector ||
+			el.webkitMatchesSelector ||
+			el.oMatchesSelector
+		).call(el, selector)
+	}
+	/** Extract the first youtube video identifier that is found within an element */
+	function extractYoutubeID(el) {
+		// fetch
+		for (const child of el.querySelectorAll(selectorAll)) {
+			// href
+			if (matches(child, selectors.href)) {
+				const href = child.getAttribute('href');
+				if (href) {
+					const url = new URL(href);
+					const youtubeID = url.searchParams.get('v');
+					if (youtubeID) return youtubeID
+				}
+			}
+			// embed href
+			if (matches(child, selectors.embedHref)) {
+				const href = child.getAttribute('href');
+				if (href) {
+					const youtubeID = href.replace(embedHrefRegex, '$1');
+					if (youtubeID) return youtubeID
+				}
+			}
+			// player
+			if (matches(child, selectors.player)) {
+				const youtubeID = child.getAttribute('data-youtube-id');
+				if (youtubeID) return youtubeID
+			}
+			// embed
+			if (matches(child, selectors.embed)) {
+				const src = child.getAttribute('src');
+				if (src) {
+					const url = new URL(src);
+					const youtubeID = url.pathname.substring(7);
+					if (youtubeID) return youtubeID
+				}
+			}
 		}
 		// debug
 		// console.log('this:', $this.html())
@@ -192,35 +230,35 @@
 	let youtubeID = "";
 
 	$.fn.getYoutubeID = function () {
-	  return extractYoutubeID(this.get(0));
+		return extractYoutubeID(this.get(0));
 	};
 
 	$.fn.youtubeTimestamps = function () {
-	  const $this = $(this);
+		const $this = $(this);
 
-	  if ($this.hasClass("youtube-timestamped")) return $this;
-	  $this.addClass("youtube-timestamped");
+		if ($this.hasClass("youtube-timestamped")) return $this;
+		$this.addClass("youtube-timestamped");
 
-	  youtubeID =
-	    $this.getYoutubeID() || $(document.body).getYoutubeID() || youtubeID;
+		youtubeID =
+			$this.getYoutubeID() || $(document.body).getYoutubeID() || youtubeID;
 
-	  if (youtubeID && $this.has('h1:contains("my notes")')) {
-	    const html = $this.html();
-	    const result = replaceTimestamps(
-	      html,
-	      function (timestamp) {
-	        return makeYoutubeTimestamp(timestamp, youtubeID, " —");
-	      },
-	      " [-—]"
-	    );
-	    if (result && html !== result) $this.html(result);
-	  }
+		if (youtubeID && $this.has('h1:contains("my notes")')) {
+			const html = $this.html();
+			const result = replaceTimestamps(
+				html,
+				function (timestamp) {
+					return makeYoutubeTimestamp(timestamp, youtubeID, " —");
+				},
+				" [-—]"
+			);
+			if (result && html !== result) $this.html(result);
+		}
 
-	  return $this;
+		return $this;
 	};
 
 	api.decorateCooked(($elem) => $elem.youtubeTimestamps(), {
-	  id: "youtubetimestamps-decorator",
+		id: "youtubetimestamps-decorator",
 	});
 
 }());

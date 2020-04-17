@@ -1,6 +1,6 @@
 {
   "name": "discourse-component-youtubetimestamps",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Convert timetamps in your post, to a timestamped link to the post's (otherwise topic's) referenced youtube video",
   "main": "source/index.js",
   "scripts": {
@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/bevry/discourse-component-youtubetimestamps#readme",
   "dependencies": {
-    "extract-timestamp": "^1.1.0"
+    "extract-timestamp": "^1.2.0"
   }
 }
