@@ -1,8 +1,8 @@
 import {
 	extractYoutubeID,
-	replaceTimestamps,
+	replace as replaceTimestamps,
 	makeYoutubeTimestamp,
-} from "../node_modules/extract-timestamp/edition-browsers/index.js";
+} from "duration-timestamp";
 
 let youtubeID = "";
 
@@ -24,9 +24,9 @@ $.fn.youtubeTimestamps = function () {
 		const result = replaceTimestamps(
 			html,
 			function (timestamp) {
-				return makeYoutubeTimestamp(timestamp, youtubeID, " —");
+				return makeYoutubeTimestamp(timestamp, youtubeID, { suffix: " —" });
 			},
-			" [-—]"
+			{ suffix: " [-—]" }
 		);
 		if (result && html !== result) $this.html(result);
 	}
